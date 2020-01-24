@@ -14,6 +14,13 @@ MazeSolver.prototype.findJunctions = function(apiResponse){
             junctionArray.push([stepCount, apiSplit[i].charAt(1)])
         }
     };
-    
     return junctionArray;
+}
+
+MazeSolver.prototype.makeMove = async function(locationKey, command, repeat) {
+    const apiResponse = await mazeApiCall(locationKey, command, repeat);
+    console.log('here => ', apiResponse)
+    const apiSplit = apiResponse.split('=')[0]
+    console.log(apiSplit)
+    return apiSplit
 }

@@ -24,11 +24,19 @@ describe('MazeSolver', function(){
       expect(steps).toEqual([[6,'R'],[11,'R']]);
     });
 
-    it("move to junction", function(){
+    it("moves to junction", async function(){
       let locationKey = 'MSwxLEU';
       let command = 'M';
       let repeat = 6;
-      let key = mazeSolver.makeMove(locationKey, command, repeat)
+      let key = await mazeSolver.makeMove(locationKey, command, repeat)
       expect(key).toEqual('NywxLEU');
     });
+
+    it("moves to another junction", async function(){
+        let locationKey = 'MSwxLEU';
+        let command = 'M';
+        let repeat = 11;
+        let key = await mazeSolver.makeMove(locationKey, command, repeat)
+        expect(key).toEqual('MTIsMSxF');
+      });
   });
