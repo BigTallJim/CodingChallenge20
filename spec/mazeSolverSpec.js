@@ -29,7 +29,15 @@ describe('MazeSolver', function(){
       let command = 'M';
       let repeat = 6;
       let key = await mazeSolver.makeMove(locationKey, command, repeat)
-      expect(key).toEqual('NywxLEU');
+      expect(key).toEqual('NywxLEU=');
+    });
+
+    it("after moving 6 turn right", async function(){
+      let locationKey = 'NywxLEU';
+      let command = 'R';
+      let repeat;
+      let key = await mazeSolver.makeMove(locationKey, command, repeat)
+      expect(key).toEqual('NywxLFM=');
     });
 
     it("moves to another junction", async function(){
@@ -38,5 +46,26 @@ describe('MazeSolver', function(){
         let repeat = 11;
         let key = await mazeSolver.makeMove(locationKey, command, repeat)
         expect(key).toEqual('MTIsMSxF');
-      });
+    });
+
+    it("after moving 11 turn right", async function(){
+      let locationKey = 'MTIsMSxF';
+      let command = 'R';
+      let repeat;
+      let key = await mazeSolver.makeMove(locationKey, command, repeat)
+      expect(key).toEqual('MTIsMSxT');
+    });
+
+    it("check corridor for X", function(){
+      corridorView = "MSwxLEU=,O,O,O,X,O,OR,O,O,O,O,OR"
+      stepsToX = mazeSolver.lookForX(corridorView);
+      expect(stepsToX).toEqual(4);
+    });
+
+    it("check corridor for X", function(){
+      corridorView = "MSwxLEU=,O,O,O,0,O,OR,O,O,O,O,OR"
+      stepsToX = mazeSolver.lookForX(corridorView);
+      expect(stepsToX).toEqual(undefined);
+    });
+
   });
