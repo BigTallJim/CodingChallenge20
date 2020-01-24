@@ -6,21 +6,18 @@ describe('MazeSolver', function(){
     it("finds next map junction", function(){
       let apiResponse = "strtRef=,0,0L"
       let steps = mazeSolver.findJunctions(apiResponse)
-      console.log(steps);
       expect(steps).toEqual([[2,'L']]);
     });
 
     it("finds slightly further map junction", function(){
       let apiResponse = "strtRef=,0,0,0L"
       let steps = mazeSolver.findJunctions(apiResponse)
-      console.log(steps);
       expect(steps).toEqual([[3,"L"]]);
     });
 
     it("actual api call step check", function(){
       let apiResponse = "MSwxLEU=,O,O,O,O,O,OR,O,O,O,O,OR"
       let steps = mazeSolver.findJunctions(apiResponse)
-      console.log(steps);
       expect(steps).toEqual([[6,'R'],[11,'R']]);
     });
 
@@ -68,9 +65,13 @@ describe('MazeSolver', function(){
       expect(stepsToX).toEqual(undefined);
     });
 
-    it("stores junctions and investigation status", function(){
+    xit("stores junctions and investigation status", function(){
         junction = 'MSwxLEU'
         junctionStatusArray = mazeSolver.addJunctionStatus(junction)
         expect(junctionStatusArray[0]).toEqual([junction, false]);
+      });
+
+      it("runs the mainline", function(){
+        mazeSolver.mainLine();
       });
   });
