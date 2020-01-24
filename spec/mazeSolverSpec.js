@@ -63,9 +63,14 @@ describe('MazeSolver', function(){
     });
 
     it("check corridor for X", function(){
-      corridorView = "MSwxLEU=,O,O,O,0,O,OR,O,O,O,O,OR"
+      corridorView = "MSwxLEU=,O,O,O,O,O,OR,O,O,O,O,OR"
       stepsToX = mazeSolver.lookForX(corridorView);
       expect(stepsToX).toEqual(undefined);
     });
 
+    it("stores junctions and investigation status", function(){
+        junction = 'MSwxLEU'
+        junctionStatusArray = mazeSolver.addJunctionStatus(junction)
+        expect(junctionStatusArray[0]).toEqual([junction, false]);
+      });
   });

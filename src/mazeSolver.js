@@ -1,5 +1,5 @@
 function MazeSolver() {
-
+    this.junctionStatusArray = [];
 }
 
 MazeSolver.prototype.findJunctions = function(apiResponse){
@@ -38,4 +38,9 @@ MazeSolver.prototype.lookForX = function(corridorView) {
         }
     };
     return xLocation;
+}
+
+MazeSolver.prototype.addJunctionStatus = function(junction) {
+    this.junctionStatusArray.push([junction, false]);
+    return this.junctionStatusArray
 }
