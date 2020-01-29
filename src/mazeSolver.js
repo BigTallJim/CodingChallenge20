@@ -18,8 +18,9 @@ MazeSolver.prototype.findJunctions = function(apiResponse){
 }
 
 MazeSolver.prototype.makeMove = async function(locationKey, command, repeat) {
-    const apiResponse = await mazeApiCall(locationKey, command, repeat);
-    // console.log('here => ', apiResponse)
+    // const apiResponse = mazeApiCall(locationKey, command, repeat).then((response) => { console.log('response: ', response);});
+    const apiResponse = await mazeApiCall(locationKey, command, repeat)
+    console.log('here => ', apiResponse)
     const apiSplit = apiResponse.split(',')[0]
     return apiSplit
 }
@@ -32,7 +33,7 @@ MazeSolver.prototype.lookForX = function(corridorView) {
     
     for (i=1; i< corridorSplit.length;i++){
         stepCount++;
-        if (corridorSplit[i] == 'X'){
+        if (corridorSplit[i] === 'X'){
             xLocation = stepCount;
         }
     };
@@ -45,6 +46,7 @@ MazeSolver.prototype.addJunctionStatus = function(junction, direction) {
 }
 
 MazeSolver.prototype.mainLine = async function(){
+    // temp = this.makeMove();
     const startPoint = await mazeApiCall();
     const startID = startPoint.split(',')[0];
     console.log(startID);
@@ -63,13 +65,13 @@ MazeSolver.prototype.mainLine = async function(){
 
     console.log(this.junctionStatusArray);
 
-    this.junctionStatusArray.forEach(async function(item){
+    this.junctionStatusArray.forEach(async (item) => {
         console.log(item);
         apiResponse = await mazeApiCall(item[0], item[1]);
         console.log(apiResponse);
 
-        // steps = await lookForX(apiResponse);
-        // console.log(steps);
+        let steps = this.lookForX(apiResponse);
+        console.log(steps);
         // junctionStatusArray.push("Test",false);
         
     })
