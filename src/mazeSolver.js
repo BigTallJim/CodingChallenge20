@@ -20,7 +20,6 @@ MazeSolver.prototype.findJunctions = function(apiResponse){
 MazeSolver.prototype.makeMove = async function(locationKey, command, repeat) {
     // const apiResponse = mazeApiCall(locationKey, command, repeat).then((response) => { console.log('response: ', response);});
     const apiResponse = await mazeApiCall(locationKey, command, repeat)
-    console.log('here => ', apiResponse)
     const apiSplit = apiResponse.split(',')[0]
     return apiSplit
 }
@@ -49,13 +48,13 @@ MazeSolver.prototype.mainLine = async function(){
     // temp = this.makeMove();
     const startPoint = await mazeApiCall();
     const startID = startPoint.split(',')[0];
-    console.log(startID);
+    console.log('start', startID);
 
     const steps = this.lookForX(startPoint);
-    console.log(steps);
+    console.log('initial steps', steps);
     
     const junctions = this.findJunctions(startPoint);
-    console.log(junctions);
+    console.log('junctions', junctions);
 
     for (let i = 0; i < junctions.length; i++) {
         let newLocation = await this.makeMove(startID, 'M', junctions[i][0])
@@ -63,15 +62,15 @@ MazeSolver.prototype.mainLine = async function(){
         this.addJunctionStatus(newLocation, junctions[i][1]);
     }
 
-    console.log(this.junctionStatusArray);
+    console.log('junction array', this.junctionStatusArray);
 
     this.junctionStatusArray.forEach(async (item) => {
-        console.log(item);
+        console.log('item', item);
         apiResponse = await mazeApiCall(item[0], item[1]);
-        console.log(apiResponse);
+        console.log('api response', apiResponse);
 
         let steps = this.lookForX(apiResponse);
-        console.log(steps);
+        console.log('steps to X', steps);
         // junctionStatusArray.push("Test",false);
         
     })
