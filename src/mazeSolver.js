@@ -65,7 +65,8 @@ MazeSolver.prototype.mainLine = async function(){
 
     console.log('junction array', this.junctionStatusArray);
 
-    this.junctionStatusArray.forEach(async (item) => {
+    for (var i = 0; i < this.junctionStatusArray.length; i++) {
+        let item = this.junctionStatusArray[i]
         console.log('item', item);
         apiResponse = await mazeApiCall(item[0], item[1]);
         const locationID = apiResponse.split(',')[0];
@@ -84,5 +85,5 @@ MazeSolver.prototype.mainLine = async function(){
         }
         // junctionStatusArray.push("Test",false);
         
-    })
+    }
 }
