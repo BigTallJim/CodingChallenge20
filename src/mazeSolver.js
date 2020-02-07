@@ -45,6 +45,7 @@ MazeSolver.prototype.addJunctionStatus = function(junction, direction) {
 }
 
 MazeSolver.prototype.mainLine = async function(){
+
     // temp = this.makeMove();
     const startPoint = await mazeApiCall();
     const startID = startPoint.split(',')[0];
@@ -67,10 +68,20 @@ MazeSolver.prototype.mainLine = async function(){
     this.junctionStatusArray.forEach(async (item) => {
         console.log('item', item);
         apiResponse = await mazeApiCall(item[0], item[1]);
+        const locationID = apiResponse.split(',')[0];
         console.log('api response', apiResponse);
+        console.log('locationID:',locationID);
 
         let steps = this.lookForX(apiResponse);
         console.log('steps to X', steps);
+
+        const junctions2 = this.findJunctions(apiResponse);
+        console.log('new juctions', junctions2);
+        debugger;
+        for (let i = 0; i < junctions2.length; i++) {
+            let newLocation = await this.makeMove(locationID, 'M', junctions2[i][0])
+            this.addJunctionStatus(newLocation, junctions2[i][1]);
+        }
         // junctionStatusArray.push("Test",false);
         
     })
