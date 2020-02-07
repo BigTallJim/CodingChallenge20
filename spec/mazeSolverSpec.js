@@ -65,14 +65,23 @@ describe('MazeSolver', function(){
       expect(stepsToX).toEqual(undefined);
     });
 
-    xit("stores junctions and investigation status", function(){
-        junction = 'MSwxLEU'
-        junctionStatusArray = mazeSolver.addJunctionStatus(junction)
-        expect(junctionStatusArray[0]).toEqual([junction, false]);
-      });
+    it("stores junctions and investigation status", function(){
+      junction = 'MSwxLEU'
+      direction = 'R'
+      junctionStatusArray = mazeSolver.addJunctionStatus(junction, direction)
+      expect(junctionStatusArray[0]).toEqual([junction, direction, false]);
+    });
 
-      it("runs the mainline", function(){
-        mazeSolver.mainLine();
-        expect(1).toEqual(1);
-      });
+    it("NO store duplicate", function(){
+      let junction = 'MSwxLEU'
+      let direction = 'R'
+      junctionStatusArray = mazeSolver.addJunctionStatus(junction, direction)
+      junctionStatusArray = mazeSolver.addJunctionStatus(junction, direction)
+      expect(junctionStatusArray.length).toEqual(1);
+    });
+
+    it("runs the mainline", function(){
+      mazeSolver.mainLine();
+      expect(1).toEqual(1);
+    });
   });

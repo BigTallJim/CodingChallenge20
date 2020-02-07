@@ -40,21 +40,27 @@ MazeSolver.prototype.lookForX = function(corridorView) {
 }
 
 MazeSolver.prototype.addJunctionStatus = function(junction, direction) {
-    this.junctionStatusArray.push([junction, direction, false]);
+    let duplicate = this.junctionStatusArray.some(item => item[0] === junction && item[1] === direction);
+    if (!duplicate){
+        this.junctionStatusArray.push([junction, direction, false]);
+    }
     return this.junctionStatusArray
 }
 
 MazeSolver.prototype.mainLine = async function(){
 
     // temp = this.makeMove();
-    const startPoint = await mazeApiCall();
-    const startID = startPoint.split(',')[0];
+    let xFound = false;
+    let locationID = await mazeApiCall();
+    const startID = locationID.split(',')[0];
     console.log('start', startID);
 
-    const steps = this.lookForX(startPoint);
+    let steps = this.lookForX(locationID);
+    if (steps) xFound = true
+
     console.log('initial steps', steps);
     
-    const junctions = this.findJunctions(startPoint);
+    const junctions = this.findJunctions(locationID);
     console.log('junctions', junctions);
 
     for (let i = 0; i < junctions.length; i++) {
@@ -65,25 +71,25 @@ MazeSolver.prototype.mainLine = async function(){
 
     console.log('junction array', this.junctionStatusArray);
 
-    for (var i = 0; i < this.junctionStatusArray.length; i++) {
+    for (var i = 0; i < this.junctionStatusArray.length && !xFound; i++) {
         let item = this.junctionStatusArray[i]
         console.log('item', item);
         apiResponse = await mazeApiCall(item[0], item[1]);
-        const locationID = apiResponse.split(',')[0];
+        locationID = apiResponse.split(',')[0];
         console.log('api response', apiResponse);
         console.log('locationID:',locationID);
 
-        let steps = this.lookForX(apiResponse);
+        steps = this.lookForX(apiResponse);
+        if (steps) xFound = true
+
         console.log('steps to X', steps);
 
         const junctions2 = this.findJunctions(apiResponse);
         console.log('new juctions', junctions2);
-        debugger;
+        
         for (let i = 0; i < junctions2.length; i++) {
             let newLocation = await this.makeMove(locationID, 'M', junctions2[i][0])
             this.addJunctionStatus(newLocation, junctions2[i][1]);
-        }
-        // junctionStatusArray.push("Test",false);
-        
+        }        
     }
 }
