@@ -13,6 +13,9 @@ MazeSolver.prototype.findJunctions = function(apiResponse){
         if (apiSplit[i].length > 1){
             junctionArray.push([stepCount, apiSplit[i].charAt(1)])
         }
+        if (apiSplit[i].length > 2){
+            junctionArray.push([stepCount, apiSplit[i].charAt(2)])
+        }
     };
     return junctionArray;
 }
@@ -91,5 +94,10 @@ MazeSolver.prototype.mainLine = async function(){
             let newLocation = await this.makeMove(locationID, 'M', junctions2[i][0])
             this.addJunctionStatus(newLocation, junctions2[i][1]);
         }        
+    }
+    if (xFound = true) {
+        const xLocation = await this.makeMove(locationID, 'M', steps)
+        console.log(xLocation)
+        console.log(this.junctionStatusArray)
     }
 }
