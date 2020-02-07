@@ -80,8 +80,8 @@ describe('MazeSolver', function(){
       expect(junctionStatusArray.length).toEqual(1);
     });
 
-    it("runs the mainline", function(){
-      mazeSolver.mainLine();
-      expect(1).toEqual(1);
+    it("runs the mainline", async function(){
+      const xLocation = await mazeSolver.mainLine();
+      expect(xLocation).toEqual('MTQsMSxO');
     });
   });

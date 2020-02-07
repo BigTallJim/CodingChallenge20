@@ -86,5 +86,8 @@ MazeSolver.prototype.mainLine = async function(){
     if (xFound = true) {
         const xLocation = await this.makeMove(locationID, 'M', steps)
         console.log(xLocation)
+        return xLocation
+    } else {
+        return 'x not found'
     }
 }
