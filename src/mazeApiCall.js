@@ -1,4 +1,5 @@
 async function mazeApiCall(locationKey, command, repeat){
+  debugger
   const url = "https://challenge20.appspot.com/"
   let params = '';
   if (locationKey) {params = `?referenceid=${locationKey}` };
