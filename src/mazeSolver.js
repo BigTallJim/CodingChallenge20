@@ -7,7 +7,6 @@ function MazeSolver() {
 
 MazeSolver.prototype.findJunctions = function(apiResponse){
     let apiSplit = apiResponse.split(',');
-    let i = 1;
     let stepCount = 0;
     let junctionArray = [];
     
@@ -31,7 +30,6 @@ MazeSolver.prototype.makeMove = async function(locationKey, command, repeat) {
 
 MazeSolver.prototype.lookForX = function(corridorView) {
     let corridorSplit = corridorView.split(',');
-    let i = 1;
     let stepCount = 0;
     let xLocation;
     
@@ -57,7 +55,6 @@ MazeSolver.prototype.checkAndStore = async function(apiResponse){
     steps = this.lookForX(apiResponse);
     if (steps) this.xFound = true;
     await this.storeJunctions(apiResponse);
-
 }
 
 MazeSolver.prototype.storeJunctions = async function(apiResponse){
