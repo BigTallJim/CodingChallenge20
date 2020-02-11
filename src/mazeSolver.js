@@ -2,6 +2,7 @@ function MazeSolver() {
     this.junctionStatusArray = [];
     this.xFound = false;
     this.locationID = undefined;
+    this.steps = undefined;
 }
 
 MazeSolver.prototype.findJunctions = function(apiResponse){
@@ -51,26 +52,26 @@ MazeSolver.prototype.addJunctionStatus = function(junction, direction) {
     return this.junctionStatusArray
 }
 
-MazeSolver.prototype.checkAndStore = function(apiResponse){
+MazeSolver.prototype.checkAndStore = async function(apiResponse){
     this.locationID = apiResponse.split(',')[0];
+    steps = this.lookForX(apiResponse);
+    if (steps) this.xFound = true;
+    await this.storeJunctions(apiResponse);
+
 }
 
-MazeSolver.prototype.mainLine = async function(){
-    let apiResponse = await mazeApiCall();
-    this.checkAndStore(apiResponse);
-    // this.locationID = apiResponse.split(',')[0];
-
-    let steps = this.lookForX(apiResponse);
-    if (steps) this.xFound = true
-
-    
+MazeSolver.prototype.storeJunctions = async function(apiResponse){
     const junctions = this.findJunctions(apiResponse);
 
     for (let i = 0; i < junctions.length; i++) {
         let newLocation = await this.makeMove(this.locationID, 'M', junctions[i][0])
-        // let turnLocation = await this.makeMove(newLocation, junctions[i][1])
         this.addJunctionStatus(newLocation, junctions[i][1]);
     }
+}
+
+MazeSolver.prototype.mainLine = async function(){
+    let apiResponse = await mazeApiCall();
+    await this.checkAndStore(apiResponse);
 
     for (var i = 0; i < this.junctionStatusArray.length && !this.xFound; i++) {
         let item = this.junctionStatusArray[i]
