@@ -1,6 +1,7 @@
 function MazeSolver() {
     this.junctionStatusArray = [];
     this.xFound = false;
+    this.locationID = undefined;
 }
 
 MazeSolver.prototype.findJunctions = function(apiResponse){
@@ -53,14 +54,14 @@ MazeSolver.prototype.addJunctionStatus = function(junction, direction) {
 MazeSolver.prototype.mainLine = async function(){
 
     // temp = this.makeMove();
-    let locationID = await mazeApiCall();
-    const startID = locationID.split(',')[0];
+    this.locationID = await mazeApiCall();
+    const startID = this.locationID.split(',')[0];
 
-    let steps = this.lookForX(locationID);
+    let steps = this.lookForX(this.locationID);
     if (steps) this.xFound = true
 
     
-    const junctions = this.findJunctions(locationID);
+    const junctions = this.findJunctions(this.locationID);
 
     for (let i = 0; i < junctions.length; i++) {
         let newLocation = await this.makeMove(startID, 'M', junctions[i][0])
@@ -71,7 +72,7 @@ MazeSolver.prototype.mainLine = async function(){
     for (var i = 0; i < this.junctionStatusArray.length && !this.xFound; i++) {
         let item = this.junctionStatusArray[i]
         apiResponse = await mazeApiCall(item[0], item[1]);
-        locationID = apiResponse.split(',')[0];
+        this.locationID = apiResponse.split(',')[0];
         steps = this.lookForX(apiResponse);
         
         if (steps)this.xFound = true
@@ -79,12 +80,12 @@ MazeSolver.prototype.mainLine = async function(){
         const junctions2 = this.findJunctions(apiResponse);
         
         for (let i = 0; i < junctions2.length; i++) {
-            let newLocation = await this.makeMove(locationID, 'M', junctions2[i][0])
+            let newLocation = await this.makeMove(this.locationID, 'M', junctions2[i][0])
             this.addJunctionStatus(newLocation, junctions2[i][1]);
         }        
     }
     if (this.xFound = true) {
-        const xLocation = await this.makeMove(locationID, 'M', steps)
+        const xLocation = await this.makeMove(this.locationID, 'M', steps)
         console.log(xLocation)
         return xLocation
     } else {
