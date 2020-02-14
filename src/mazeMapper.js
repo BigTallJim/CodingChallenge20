@@ -8,13 +8,15 @@ function MazeMapper(mazeArray) {
         steps.forEach(element => {
             yCount++;
             outputArray.push([xCount,yCount]);
-            if (element.includes("R")){
-                xCount++;
-                outputArray.push([xCount,yCount]);
-            }
             if (element.includes("L")){
                 xCount--;
                 outputArray.push([xCount,yCount]);
+                xCount++
+            }
+            if (element.includes("R")){
+                xCount++;
+                outputArray.push([xCount,yCount]);
+                xCount--
             }
         });
     });
