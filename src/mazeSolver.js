@@ -69,6 +69,7 @@ MazeSolver.prototype.storeJunctions = async function(apiResponse){
 
 MazeSolver.prototype.finalReporting = async function(){
     if (this.xFound = true) {
+        console.log(this.junctionStatusArray);
         const xLocation = await this.makeMove(this.locationID, 'M', steps)
         console.log(xLocation)
         return xLocation
