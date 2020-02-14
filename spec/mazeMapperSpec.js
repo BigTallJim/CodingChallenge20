@@ -25,5 +25,11 @@ describe('MazeMapper', function(){
         let maze = MazeMapper(["O,O,OLR,O,O,OL,O,O,O,O,OR"])
         expect(maze).toEqual(result);
       });
+
+      it("copes with L turn and new corridor", function(){
+        let result = [[0,0],[0,1],[0,2],[-1,2],[-2,2]]
+        let maze = MazeMapper(["0,0L","0,0"])
+        expect(maze).toEqual(result);
+      });
 })
 
