@@ -6,7 +6,7 @@ describe('MazeSolver', function(){
     it("finds next map junction", function(){
       let apiResponse = "strtRef=,0,0L"
       let steps = mazeSolver.findJunctions(apiResponse)
-      expect(steps).toEqual([[2,'L']]);
+     expect(steps).toEqual([[2,'L']]);
     });
 
     it("finds slightly further map junction", function(){
